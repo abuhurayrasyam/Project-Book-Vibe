@@ -2,9 +2,9 @@ import React from 'react';
 
 const Navbar = () => {
     const links = <>
-        <li className='m-3 cursor-pointer'>Home</li>
-        <li className='m-3 cursor-pointer'>Listed Books</li>
-        <li className='m-3 cursor-pointer'>Pages to Read</li>
+        <li className='btn btn-ghost m-3 cursor-pointer'>Home</li>
+        <li className='btn btn-ghost m-3 cursor-pointer'>Listed Books</li>
+        <li className='btn btn-ghost m-3 cursor-pointer'>Pages to Read</li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -19,7 +19,7 @@ const Navbar = () => {
                     {links}
                 </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">Book Vibe</a>
+                <a className="btn btn-ghost lg:text-xl text-[15px]">World Book Library</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
