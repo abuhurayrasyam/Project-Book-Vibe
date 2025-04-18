@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLoaderData, useParams } from 'react-router';
+import { addToLocalStorage } from '../../utility/addToLocalStorage';
 
 const BookDetails = () => {
 
@@ -11,6 +12,10 @@ const BookDetails = () => {
     const clickedBook = bookData.find(book => book.bookId === clickedBookId);
 
     const {bookName, author, image, review, totalPages, rating, category, tags, publisher, yearOfPublishing} = clickedBook;
+
+    const handleMarkAsRead = id => {
+        addToLocalStorage(id)
+    }
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 place-items-center my-10'>
@@ -33,8 +38,8 @@ const BookDetails = () => {
                 <h4 className='text-gray-600 font-semibold'>Year of Publishing: <span className='text-black font-bold'>{yearOfPublishing}</span></h4>
                 <h4 className='text-gray-600 font-semibold'>Rating: <span className='text-black font-bold'>{rating}</span></h4>
                 <div className='flex gap-3'>
-                    <button className='btn bg-white border-gray-600'>Read</button>
-                    <button className='btn bg-green-400 text-white'>Wishlist</button>
+                    <button onClick={() => handleMarkAsRead(id)} className='btn bg-white border-gray-600'>Mark as Read</button>
+                    <button className='btn bg-green-400 text-white'>Add to Wishlist</button>
                 </div>
             </div>
         </div>
