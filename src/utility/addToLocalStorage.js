@@ -1,4 +1,4 @@
-const getFromLocalStorage = () => {
+export const getFromLocalStorage = () => {
     const storedBookString = localStorage.getItem("readBookList");
 
     if(storedBookString) {
