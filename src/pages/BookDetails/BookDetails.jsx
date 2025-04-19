@@ -14,7 +14,11 @@ const BookDetails = () => {
     const {bookName, author, image, review, totalPages, rating, category, tags, publisher, yearOfPublishing} = clickedBook;
 
     const handleMarkAsRead = id => {
-        addToLocalStorage(id)
+        addToLocalStorage("readBookList", id)
+    }
+
+    const handleAddToWishlist = id => {
+        addToLocalStorage("wishlistBookList", id)
     }
 
     return (
@@ -38,8 +42,8 @@ const BookDetails = () => {
                 <h4 className='text-gray-600 font-semibold'>Year of Publishing: <span className='text-black font-bold'>{yearOfPublishing}</span></h4>
                 <h4 className='text-gray-600 font-semibold'>Rating: <span className='text-black font-bold'>{rating}</span></h4>
                 <div className='flex gap-3'>
-                    <button onClick={() => handleMarkAsRead(id)} className='btn bg-white border-gray-600'>Mark as Read</button>
-                    <button className='btn bg-green-400 text-white'>Add to Wishlist</button>
+                    <button onClick={() => handleMarkAsRead(clickedBookId)} className='btn bg-white border-gray-600'>Mark as Read</button>
+                    <button onClick={() => handleAddToWishlist(clickedBookId)} className='btn bg-green-400 text-white'>Add to Wishlist</button>
                 </div>
             </div>
         </div>

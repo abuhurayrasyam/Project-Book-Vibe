@@ -3,21 +3,26 @@ import { useLoaderData } from 'react-router';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { getFromLocalStorage } from '../../utility/addToLocalStorage';
-import ReadBooks from '../ReadBooks/ReadBooks';
+import MyBook from '../MyBook/MyBook';
 
 
 const MyBooks = () => {
 
     const [readList, setReadList] = useState([]);
+    const [wishList, setWishList] = useState([]);
     const [sort, setSort] = useState('');
 
     const booksData = useLoaderData();
     
     useEffect(() => {
-        const storedBookDataString = getFromLocalStorage();
-        const storedBookData = storedBookDataString.map(id => parseInt(id));
-        const currentReadList = booksData.filter(books => storedBookData.includes(books.bookId));
+        const readIds = getFromLocalStorage("readBookList").map(id => parseInt(id));
+        const wishIds = getFromLocalStorage("wishlistBookList").map(id => parseInt(id));
+
+        const currentReadList = booksData.filter(book => readIds.includes(book.bookId));
+        const currentWishList = booksData.filter(book => wishIds.includes(book.bookId));
+
         setReadList(currentReadList);
+        setWishList(currentWishList);
     }, []);
 
     const handleSort = (sortType) => {
@@ -26,10 +31,12 @@ const MyBooks = () => {
         if(sortType === "Pages") {
             const sortedByPages = [...readList].sort((a,b) => a.totalPages - b.totalPages);
             setReadList(sortedByPages);
+            setWishList(sortedByPages);
         }
         if(sortType === "Ratings") {
             const sortedByRatings = [...readList].sort((a,b) => a.rating - b.rating);
             setReadList(sortedByRatings);
+            setWishList(sortedByRatings);
         }
     }
 
@@ -54,12 +61,18 @@ const MyBooks = () => {
                 </TabList>
 
                 <TabPanel>
-                    {
-                        readList.map(book => <ReadBooks key={book.bookId} book={book}></ReadBooks>)
-                    }
+                    <div className='flex flex-col gap-4 my-10'>
+                        {
+                            readList.map(book => <MyBook key={book.bookId} book={book} listType="readList"></MyBook>)
+                        }
+                    </div>
                 </TabPanel>
                 <TabPanel>
-                    <h1>Wishlist Books</h1>
+                    <div className='flex flex-col gap-4 my-10'>
+                        {
+                            wishList.map(book => <MyBook key={book.bookId} book={book} listType="wishList"></MyBook>)
+                        }
+                    </div>
                 </TabPanel>
             </Tabs>
         </div>

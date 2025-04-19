@@ -1,24 +1,17 @@
-export const getFromLocalStorage = () => {
-    const storedBookString = localStorage.getItem("readBookList");
+const getFromLocalStorage = (key) => {
+    const storedDataString = localStorage.getItem(key);
+    return storedDataString ? JSON.parse(storedDataString) : [];
+}
 
-    if(storedBookString) {
-        const storedBookData = JSON.parse(storedBookString);
-        return storedBookData;
-    }
-    else {
-        return [];
+const addToLocalStorage = (key, id) => {
+    const storedData = getFromLocalStorage(key);
+
+    if (storedData.includes(id)) {
+        alert("This item is already in your list!");
+    } else {
+        storedData.push(id);
+        localStorage.setItem(key, JSON.stringify(storedData));
     }
 }
 
-export const addToLocalStorage = (id) => {
-    const storedBookData = getFromLocalStorage();
-
-    if(storedBookData.includes(id)) {
-        alert("This Item Already in Local Storage!")
-    }
-    else {
-        storedBookData.push(id);
-        const setData = JSON.stringify(storedBookData);
-        localStorage.setItem("readBookList", setData);
-    }
-}
+export { getFromLocalStorage, addToLocalStorage };
