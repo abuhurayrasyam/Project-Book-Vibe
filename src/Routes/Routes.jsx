@@ -7,6 +7,7 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import Home from '../pages/Home/Home';
 import BookDetails from '../pages/BookDetails/BookDetails';
 import MyBooks from '../pages/MyBooks/MyBooks';
+import RatingChart from '../pages/RatingChart/RatingChart';
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,11 @@ export const router = createBrowserRouter([
         {
           path: "/my-books",
           Component: MyBooks,
+          loader: () => fetch('../booksData.json')
+        },
+        {
+          path: "/rating-chart",
+          Component: RatingChart,
           loader: () => fetch('../booksData.json')
         }
       ]
