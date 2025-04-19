@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLoaderData, useParams } from 'react-router';
 import { addToLocalStorage } from '../../utility/addToLocalStorage';
+import Swal from 'sweetalert2';
 
 const BookDetails = () => {
 
@@ -13,13 +14,35 @@ const BookDetails = () => {
 
     const {bookName, author, image, review, totalPages, rating, category, tags, publisher, yearOfPublishing} = clickedBook;
 
-    const handleMarkAsRead = id => {
-        addToLocalStorage("readBookList", id)
-    }
+    const showAlert = (title, text, iconColor = 'success') => {
+        Swal.fire({
+            title,
+            text,
+            icon: iconColor === 'green' ? 'success' : 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: 'green'
+        });
+    };
 
-    const handleAddToWishlist = id => {
-        addToLocalStorage("wishlistBookList", id)
-    }
+    const handleMarkAsRead = (id) => {
+        const existing = JSON.parse(localStorage.getItem("readBookList")) || [];
+        if (existing.includes(id)) {
+            showAlert('Already Marked!', `"${bookName}" is already marked as read.`, 'red');
+        } else {
+            addToLocalStorage("readBookList", id);
+            showAlert('Marked as Read!', `"${bookName}" has been added to your Read list.`, 'green');
+        }
+    };
+    
+    const handleAddToWishlist = (id) => {
+        const existing = JSON.parse(localStorage.getItem("wishlistBookList")) || [];
+        if (existing.includes(id)) {
+            showAlert('Already in Wishlist!', `"${bookName}" is already in your wishlist.`, 'red');
+        } else {
+            addToLocalStorage("wishlistBookList", id);
+            showAlert('Added to Wishlist!', `"${bookName}" has been added to your Wishlist.`, 'green');
+        }
+    };
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 place-items-center my-10'>
